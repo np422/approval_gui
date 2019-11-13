@@ -1,9 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.hosts << "zakapp2"
-
-  config.logger   = GELF::Logger.new('zaklog1', 12_201, 'WAN', facility: 'approval_gui')
-  config.notifier = GELF::Notifier.new('zaklog1', 12_201)
+  config.hosts << 'zakapp2'
+  config.lograge.enabled = true
+  config.lograge.formatter = Lograge::Formatters::Graylog2.new
+  config.logger = GELF::Logger.new('zaklog1', 12_201, 'WAN', facility: 'approval_gui')
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

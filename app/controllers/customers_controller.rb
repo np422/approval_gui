@@ -42,15 +42,6 @@ class CustomersController < ApplicationController
   def update
     respond_to do |format|
       if @customer.update(customer_params)
-        unless @customer.changed_attributes.grep('approved').empty?
-          if @customer.changed_attributes['approved']
-            Rails.logger(short_message: "Customer #{@customer.name} not approved",
-                         full_message: @customer.to_json)
-          else
-            Rails.logger(short_message: "Customer #{@customer.name} approved",
-                         full_message: @customer.to_json)
-          end
-        end
         format.html { redirect_to @customer, notice: 'Customer was successfully updated.' }
         format.json { render :show, status: :ok, location: @customer }
       else
