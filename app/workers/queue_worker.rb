@@ -7,5 +7,8 @@ queue.subscribe(manual_ack: true, block: true) do |_delivery_info, properties, p
   c = Customer.new
   c.from_json(payload)
   c.approved = false
-  c.save
+  if c.save
+    n = GELF::Notifier.new('zaklog1', 12_201)
+    n.notify!(short_message: "Imported new user #{name}", full_message: c.to_json)
+  end
 end
